@@ -8,6 +8,7 @@ export default function Home() {
   const [xcount, setXCount] = useState(0);
   const [ocount, setOCount] = useState(0);
   const [winner, setWinner] = useState("");
+  const [winningSquares, setWinningSquares] = useState([]);
 
   const winningComninations = [
     [0, 1, 2],
@@ -35,18 +36,18 @@ export default function Home() {
       setOCount(ocount + 1);
     }
 
-    //only start processing the winner when there are enough symbols to create a win
+    // Only start processing the winner when there are enough symbols
     if (xcount >= 2) {
-      //Automatic reset incase the is a draw between the players
-      if (newSquares.every((newSquares) => newSquares !== null)) {
+      const result = getWinner(newSquares);
+      if (result !== null) {
+        setWinner(result);
+      }
+
+      if (newSquares.every((val) => val !== null)) {
         setSquares(Array(9).fill(null));
         setOCount(0);
         setXCount(0);
         setWinner("");
-      }
-
-      if (getWinner(newSquares) !== null) {
-        setWinner(getWinner(newSquares));
       }
     }
   };
@@ -60,9 +61,11 @@ export default function Home() {
         squares[a] === squares[b] &&
         squares[a] === squares[c]
       ) {
+        setWinningSquares(combination);
         return squares[a];
       }
     }
+    setWinningSquares([]);
     return null;
   };
 
@@ -71,6 +74,7 @@ export default function Home() {
     setOCount(0);
     setXCount(0);
     setWinner("");
+    setWinningSquares([]);
   };
 
   const displayWinner = (winner) => {
@@ -97,6 +101,7 @@ export default function Home() {
               value={value}
               onClick={() => handleSquareClick(index)}
               disableClick={winner !== null && winner !== ""}
+              isWinning={winningSquares.includes(index)}
             />
           ))}
         </div>
