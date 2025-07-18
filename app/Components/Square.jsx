@@ -6,7 +6,10 @@ export default function Square({ value, onClick, disableClick }) {
       className="square"
       disabled={disableClick}
       onClick={onClick}
-      style={{ color: "black" }}
+      style={{
+        color: value === "X" ? "green" : value === "O" ? "red" : "black",
+        fontSize: "8rem",
+      }}
     >
       {value}
     </button>

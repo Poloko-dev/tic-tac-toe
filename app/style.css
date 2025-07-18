@@ -6,6 +6,7 @@ body {
   font-family: sans-serif;
   margin: 20px;
   padding: 0;
+  background: linear-gradient(135deg, #6a11cb 0%, #833ab4 40%, #9d50bb 100%);
 }
 
 h1 {
